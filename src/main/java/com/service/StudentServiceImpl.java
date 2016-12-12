@@ -4,6 +4,7 @@ import com.domain.Student;
 import com.repository.StudentRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
  */
 
 @Component
-public class StudentServiceImpl implements StudentService{
+public class StudentServiceImpl implements StudentService {
 
     @Autowired
     private StudentRepository studentRepository;
@@ -24,8 +25,12 @@ public class StudentServiceImpl implements StudentService{
     }
 
     @Override
-    public Student findOne(Long id) throws NotFoundException {
-        return studentRepository.findOne(id);
+    public Student findOne(Long id) throws EmptyResultDataAccessException {
+        try {
+            return studentRepository.findOne(id);
+        } catch (Exception e) {
+            throw new RuntimeException(getError(id));
+        }
     }
 
     @Override
@@ -34,7 +39,15 @@ public class StudentServiceImpl implements StudentService{
     }
 
     @Override
-    public void remove(Student student) throws NotFoundException {
-        studentRepository.delete(student);
+    public void remove(Long id) throws EmptyResultDataAccessException {
+        try {
+            studentRepository.delete(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new RuntimeException(getError(id));
+        }
+    }
+
+    private String getError(Long id) {
+        return "Student with id " + id + "does not exists";
     }
 }

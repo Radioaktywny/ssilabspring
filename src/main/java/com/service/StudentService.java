@@ -2,6 +2,7 @@ package com.service;
 
 import com.domain.Student;
 import javassist.NotFoundException;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 import java.util.List;
 
@@ -12,10 +13,10 @@ public interface StudentService {
 
     List<Student> findAll();
 
-    Student findOne(Long id)throws NotFoundException;
+    Student findOne(Long id) throws EmptyResultDataAccessException ;
 
     Student save(Student student);
 
-    void remove(Student student)throws NotFoundException;
+    void remove(Long id) throws EmptyResultDataAccessException;
 
 }
