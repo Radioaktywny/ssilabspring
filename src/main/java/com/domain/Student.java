@@ -3,7 +3,6 @@ package com.domain;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -18,15 +17,12 @@ public class Student {
     private Long id;
 
     @Size(min = 6, max = 15)
-    @NotNull
     private String firstName;
 
-
     @Size(min = 6, max = 15)
-    @NotNull
     private String lastName;
 
-    @NotNull
+    @NotEmpty
     private String universityName;
 
     public String getFirstName() {

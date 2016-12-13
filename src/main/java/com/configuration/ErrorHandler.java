@@ -1,4 +1,4 @@
-package com.conf;
+package com.configuration;
 
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ControllerAdvice
 public class ErrorHandler {
 
-    private static final String ERROR_VIEW_NAME = "404";
+    private static final String ERROR_VIEW_NAME = "error";
     private static final String ERROR_MESSAGE_ATTRIBUTE = "errorMessage";
 
     @ExceptionHandler(value = RuntimeException.class)

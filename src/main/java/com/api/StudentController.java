@@ -4,14 +4,13 @@ import com.domain.Student;
 import com.service.StudentService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +28,7 @@ public class StudentController {
     private StudentService studentService;
 
     @PostMapping
-    public ModelAndView save(@ModelAttribute Student student, BindingResult bindingResult) {
+    public ModelAndView save(@Valid Student student, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return new ModelAndView("/student", modelMapWithStudent(student));
         }
@@ -44,7 +43,7 @@ public class StudentController {
 
     @GetMapping
     public String showStudents(HttpServletRequest request) {
-        request.setAttribute("students", getAllStudents());
+        request.setAttribute("students", studentService.findAll());
         return "show";
     }
 
@@ -56,7 +55,7 @@ public class StudentController {
     @RequestMapping(value = "/delete/{id}")
     public String deleteStudent(@PathVariable("id") Long id, HttpServletRequest request) {
         studentService.remove(id);
-        request.setAttribute("students", getAllStudents());
+        request.setAttribute("students", studentService.findAll());
         return "show";
     }
 
@@ -75,14 +74,11 @@ public class StudentController {
     }
 
     private ModelMap modelMapWithAllStudents() {
-        List<Student> allStudents = getAllStudents();
+        List<Student> allStudents = studentService.findAll();
         ModelMap map = new ModelMap();
         map.put("students", allStudents);
         return map;
     }
 
-    private List<Student> getAllStudents() {
-        return studentService.findAll();
-    }
 
 }
