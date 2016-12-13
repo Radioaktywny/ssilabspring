@@ -14,6 +14,7 @@
     <link href="https://fonts.googleapis.com/css?family=Audiowide" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Play" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Bungee|Russo+One" rel="stylesheet">
+    <link href="../resources/style.css" rel="stylesheet">
 </head>
 <body>
 
@@ -21,11 +22,14 @@
     <img src="../resources/img/404.jpg" style=" display: block; margin: 0 auto; ">
     <h2 style="color: black; font-family: 'Russo One', sans-serif; padding-top: 0px; text-align: center;">Wygląda na to,
         że odkryłeś koniec internetów.</br> Gratulujemy!!!</br>Jeśli jednak zechciałbyś wrócić do naszej strony kliknij
-        <a href="/student" style="color: #6666FF;">STRONA GŁÓWNA</a></h2>
-    <h3>Error message</h3>
-    <h4 class="error">
+        <a href="/student" style="color: #6666FF;">STRONA GŁÓWNA</a></br>
+        Error message
+        </br>
+    </h2>
+    <div style="color: red; font-family: 'Russo One',sans-serif; padding-top: 0px; font-weight: 400; text-align: center;">
         <%= request.getAttribute("errorMessage")%>
-    </h4>
+    </div>
+
 
 </div>
 

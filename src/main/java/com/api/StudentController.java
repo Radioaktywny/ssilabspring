@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +24,7 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
-    @PostMapping
+    @RequestMapping(method = RequestMethod.POST)
     public ModelAndView save(@Valid Student student, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return new ModelAndView("/student", modelMapWithStudent(student));
@@ -36,12 +33,12 @@ public class StudentController {
         return new ModelAndView("show", modelMapWithAllStudents());
     }
 
-    @GetMapping(value = "/new")
+    @RequestMapping(method = RequestMethod.GET, value = "/new")
     public ModelAndView createStudent() {
         return new ModelAndView("/student", modelMapWithNewStudent());
     }
 
-    @GetMapping
+    @RequestMapping(method = RequestMethod.GET)
     public String showStudents(HttpServletRequest request) {
         request.setAttribute("students", studentService.findAll());
         return "show";
